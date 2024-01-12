@@ -1,16 +1,7 @@
-# chat_app
+# VietFresh
+Ứng dụng bán hàng nông sản giúp tiêu thụ sản phẩm cho nông dân
 
-A new Flutter project.
+## Tổng Quan
 
-## Getting Started
+Dự án này được thiết kế dựa trên phần mềm flutter
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
