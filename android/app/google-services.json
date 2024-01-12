@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "2028419222",
+    "firebase_url": "https://vietfresh-6acc6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "vietfresh-6acc6",
+    "storage_bucket": "vietfresh-6acc6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2028419222:android:90dfcd95e82e3b50582ab7",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe23ljcTTIIPCgWI4fBC1guDGGSBFeO7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
