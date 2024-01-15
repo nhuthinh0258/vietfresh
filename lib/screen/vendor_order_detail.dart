@@ -68,7 +68,7 @@ class _VendorOrderDetailState extends State<VendorOrderDetail> {
               orderItem['quantity_buy']; // Cập nhật số lượng đã bán mới
 
           final currentQuantity =
-              productData!['quantity'] ?? 0; // Lấy số lượng đã bán hiện tại
+              productData['quantity'] ?? 0; // Lấy số lượng đã bán hiện tại
           final newQuantity = currentQuantity -
               orderItem['quantity_buy']; // Cập nhật số lượng đã bán mới
 

@@ -67,9 +67,9 @@ class _TabsCustomerState extends ConsumerState<TabsCustomer>{
                         label: 'Yêu Thích'),
                     BottomNavigationBarItem(
                         icon: Icon(
-                          Icons.people,
+                          Icons.chat,
                         ),
-                        label: 'Cộng đồng'),
+                        label: 'Hỗ trợ'),
                     BottomNavigationBarItem(
                         icon: Icon(
                           Icons.person,

@@ -38,6 +38,7 @@ class _OrderInforState extends State<OrderInfor> {
   }
 
   void loadData() async {
+    print(widget.cartItems);
     final user = firebase.currentUser!;
     final userData = await firestore.collection('users').doc(user.uid).get();
     final userProfile = userData.data();
@@ -87,8 +88,8 @@ class _OrderInforState extends State<OrderInfor> {
       String paymentMethodValue = _method.toString().split('.').last;
       final user = firebase.currentUser!;
       final ordertId = 'order-${DateTime.now().millisecondsSinceEpoch}';
-      final cartItems = List<Map<String, dynamic>>.from(widget.cartItems);
-      final vendorId = cartItems.first['vendor_id'];
+      // final cartItems = List<Map<String, dynamic>>.from(widget.cartItems);
+      final vendorId = widget.cartItems.first['vendor_id'];
       final originData =
           await firestore.collection('orgin').doc(selectedOriginId).get();
       final originName = originData.data()!['name'];
@@ -99,7 +100,7 @@ class _OrderInforState extends State<OrderInfor> {
         'order_address': enteredBillingAdress,
         'order_phone': enteredBillingPhone,
         'order_origin': selectedOriginId,
-        'order_location':originName,
+        'order_location': originName,
         'orderItems': widget.cartItems,
         'totalAmount': widget.totalAmount,
         'payment_method': paymentMethodValue,

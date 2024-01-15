@@ -85,6 +85,7 @@ class VendorProductDetail extends StatelessWidget {
         newProduct.remove('sort_timestamp'); // Xóa trường 'sort_timestamp'
         newProduct.remove('note'); // Xóa trường 'note'
         newProduct.remove('quantity'); // Xóa trường 'quantity'
+        newProduct.remove('user'); // Xóa trường 'quantity'
         newProduct['quantity_buy'] = 1; // Khởi tạo quantity_buy là 1
         products.add(newProduct);
         // Xóa tất cả sản phẩm và thêm sản phẩm mới
@@ -111,6 +112,7 @@ class VendorProductDetail extends StatelessWidget {
         newProduct.remove('sort_timestamp'); // Xóa trường 'sort_timestamp'
         newProduct.remove('note'); // Xóa trường 'note'
         newProduct.remove('quantity'); // Xóa trường 'quantity'
+        newProduct.remove('user'); // Xóa trường 'quantity'
         newProduct['quantity_buy'] = 1; // Khởi tạo quantity_buy là 1
         products.add(newProduct);
       }
@@ -292,9 +294,13 @@ class VendorProductDetail extends StatelessWidget {
                                     .push(MaterialPageRoute(builder: (context) {
                                   return const AuthScreen();
                                 }));
-                              }else{
-                                Navigator.of(context).push(MaterialPageRoute(builder: (ctx){
-                                  return OrderInfor(totalAmount: formatPrice(detailData['price']), cartItems: cartItems);
+                              } else {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (ctx) {
+                                  return OrderInfor(
+                                      totalAmount:
+                                          formatPrice(detailData['price']),
+                                      cartItems: cartItems);
                                 }));
                               }
                             },

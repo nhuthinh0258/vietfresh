@@ -43,27 +43,64 @@ class _NewMessageState extends ConsumerState<NewMessage> {
 
   //Hàm xử lý gửi tin nhắn
   void submitMessage() async {
-    //enteredMessage lấy nội dung hiện tại từ TextField thông qua messageController.text
-    final enteredMessage = messageController.text;
-    //kiểm tra xem nội dung tin nhắn sau khi loại bỏ khoảng trắng ở đầu và cuối có phải là rỗng không
-    if (enteredMessage.trim().isEmpty) {
-      //Nếu rỗng, kết thúc không làm gì cả
+    // Lấy dữ liệu người dùng
+    final user = firebase.currentUser!;
+    // Lấy nội dung hiện tại từ TextField thông qua messageController.text
+    final enteredMessage = messageController.text.trim();
+
+    // Kiểm tra xem nội dung tin nhắn sau khi loại bỏ khoảng trắng ở đầu và cuối có phải là rỗng không
+    if (enteredMessage.isEmpty) {
+      // Nếu rỗng, kết thúc không làm gì cả
       return;
     }
 
-    //Lấy dữ liệu người dùng
-    final user = firebase.currentUser!;
-    final userData = await firestore.collection('users').doc(user.uid).get();
-    //Gửi đến firebase
-    firestore.collection('chat').add({
-      'userid': user.uid,
-      'username': userData.data()!['username'],
-      'userimage': userData.data()!['image'],
-      'text': enteredMessage,
-      'time': Timestamp.now(),
-    });
+    // Lấy dữ liệu tin nhắn từ Firestore
+    final chatRef = firestore.collection('chat').doc(user.uid);
+    final chatSnapshot = await chatRef.get();
 
-    //xóa nội dung của TextField sau khi gửi, chuẩn bị cho việc nhập tin nhắn tiếp theo.
+    // Kiểm tra xem đã có dữ liệu tin nhắn chưa
+    if (chatSnapshot.exists) {
+      // Nếu có, cập nhật tin nhắn
+      final chats = List.from(chatSnapshot.data()!['chats'] ?? []);
+      final userData = await firestore.collection('users').doc(user.uid).get();
+      // Tạo một Map chứa thông tin tin nhắn và người gửi
+      final messageInfo = {
+        'message': enteredMessage,
+        'senderId': user.uid,
+        'username': userData.data()!['username'],
+        'userimage': userData.data()!['image'],
+        'sort_time': Timestamp.now()
+      };
+
+      chats.add(messageInfo);
+
+      // Cập nhật dữ liệu tin nhắn trong Firestore
+      await chatRef.update({
+        'chats': chats,
+        'lastMessage': enteredMessage,
+        'lastMessageTime': Timestamp.now(),
+      });
+    } else {
+      // Nếu chưa có dữ liệu tin nhắn, tạo mới
+      final userData = await firestore.collection('users').doc(user.uid).get();
+      // Tạo một Map chứa thông tin tin nhắn và người gửi
+      final messageInfo = {
+        'message': enteredMessage,
+        'senderId': user.uid,
+        'username': userData.data()!['username'],
+        'userimage': userData.data()!['image'],
+        'sort_time': Timestamp.now()
+      };
+
+      await chatRef.set({
+        'userid': user.uid,
+        'chats': [messageInfo],
+        'lastMessage': enteredMessage,
+        'lastMessageTime': Timestamp.now(),
+      });
+    }
+
+    // Xóa nội dung của TextField sau khi gửi, chuẩn bị cho việc nhập tin nhắn tiếp theo.
     messageController.clear();
   }
 
@@ -87,6 +124,9 @@ class _NewMessageState extends ConsumerState<NewMessage> {
                 ),
                 label: const Text('Gửi tin nhắn'),
               ),
+              onSubmitted: (value) {
+                submitMessage();
+              },
             ),
           ),
           IconButton(

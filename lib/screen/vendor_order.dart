@@ -73,12 +73,16 @@ class _OrderVendoState extends State<OrderVendor>
             title: const Text('Đơn Hàng'),
             centerTitle: true,
             bottom: TabBar(
+                isScrollable: true,
                 labelColor: Colors.yellow,
                 unselectedLabelColor: Colors.white,
                 controller: tabController,
                 tabs: statusList.map((status) {
                   return Tab(
-                    text: status['status_code'],
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(status['status_code']),
+                    ),
                   );
                 }).toList()),
           ),
@@ -140,8 +144,10 @@ class _OrderVendoState extends State<OrderVendor>
                           DateFormat('dd-MM-yyyy - kk:mm').format(dateTime);
                       return InkWell(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx){
-                            return VendorOrderDetail(order: order, orders: orders[index].id);
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (ctx) {
+                            return VendorOrderDetail(
+                                order: order, orders: orders[index].id);
                           }));
                         },
                         child: Card(

@@ -141,7 +141,7 @@ class _CartState extends State<Cart> {
                             height: 12,
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 14),
+                            margin: const EdgeInsets.symmetric(horizontal: 6),
                             decoration: BoxDecoration(
                               color: Theme.of(context).primaryColorLight,
                               borderRadius: BorderRadius.circular(10),
