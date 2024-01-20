@@ -38,7 +38,6 @@ class _OrderInforState extends State<OrderInfor> {
   }
 
   void loadData() async {
-    print(widget.cartItems);
     final user = firebase.currentUser!;
     final userData = await firestore.collection('users').doc(user.uid).get();
     final userProfile = userData.data();

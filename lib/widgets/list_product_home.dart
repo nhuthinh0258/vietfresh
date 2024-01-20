@@ -137,12 +137,12 @@ class ListProductHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: firestore
+    return FutureBuilder(
+        future: firestore
             .collection('product')
             .orderBy('quantity_buy', descending: true)
             .limit(3)
-            .snapshots(),
+            .get(),
         builder: (ctx, proSnapshot) {
           if (proSnapshot.connectionState == ConnectionState.waiting) {
             return const Center(

@@ -3,40 +3,24 @@ import 'package:chat_app/screen/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class CarouselBanner extends StatefulWidget {
+class CarouselBanner extends StatelessWidget {
   const CarouselBanner({super.key});
-
-  @override
-  State<CarouselBanner> createState() {
-    return _CarouselBannerState();
-  }
-}
-
-class _CarouselBannerState extends State<CarouselBanner> {
-  Future<List<String>> fetchBannerImages() async {
-    final bannerData = await firestore.collection('banner').get();
-    List<String> imageUrls = [];
-    for (final doc in bannerData.docs) {
-      imageUrls.add(doc['image']);
-    }
-    return imageUrls;
-  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fetchBannerImages(), // Lấy ảnh từ Firestore
+      future: firestore.collection('banner').get(), // Lấy ảnh từ Firestore
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator(); // Hiển thị loading khi đang chờ
         }
 
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return const Text(
               "Ko tìm thấy banner."); // Hiển thị thông báo nếu không có ảnh
         }
 
-        List banners = snapshot.data!; // Lấy danh sách ảnh từ snapshot
+        final banners = snapshot.data!.docs; // Lấy danh sách ảnh từ snapshot
 
         List<Widget> imageSliders = banners.map((imageUrl) {
           return Builder(
@@ -48,7 +32,7 @@ class _CarouselBannerState extends State<CarouselBanner> {
                   color: Colors.amber,
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: imageUrl,
+                  imageUrl: imageUrl['image'],
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,

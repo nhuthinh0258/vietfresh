@@ -11,6 +11,24 @@ import 'newest_product.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  // Future fetchData() async {
+  //   var bannerData = await firestore.collection('banner').get();
+  //   var categoryData = await firestore.collection('category').limit(8).get();
+  //   var newProductData = await firestore
+  //       .collection('product')
+  //       .orderBy('sort_timestamp', descending: true)
+  //       .limit(4)
+  //       .get();
+  //   var hotProductData = await firestore
+  //       .collection('product')
+  //       .orderBy('quantity_buy', descending: true)
+  //       .limit(3)
+  //       .get();
+  //   // Trả về danh sách các dữ liệu đã tải.
+  //   return [bannerData, categoryData, newProductData, hotProductData];
+  // }
+
   @override
   Widget build(BuildContext context) {
     final user = firebase.currentUser;

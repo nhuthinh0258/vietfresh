@@ -14,12 +14,12 @@ class ProductGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: firestore
+    return FutureBuilder(
+      future: firestore
           .collection('product')
           .orderBy('sort_timestamp', descending: true)
           .limit(4)
-          .snapshots(),
+          .get(),
       builder: (ctx, proSnapshot) {
         if (proSnapshot.connectionState == ConnectionState.waiting) {
           return const Center(
